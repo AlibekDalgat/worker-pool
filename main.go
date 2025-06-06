@@ -80,10 +80,10 @@ func (wp *WorkerPool) Shutdown() {
 func (wp *WorkerPool) SendTask(task string) error {
 	select {
 	case wp.poolChan <- fmt.Sprintf("Task %s", task):
+		return nil
 	case <-wp.shutdown:
 		return errors.New("worker-pool shutdowned")
 	}
-	return nil
 }
 
 func (worker *Worker) runWorker(wg *sync.WaitGroup) {
